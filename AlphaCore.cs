@@ -203,7 +203,7 @@ namespace Alpha
 			{
 				var distanceFromFollower = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 				//We are NOT within clear path distance range of leader. Logic can continue
-				if (distanceFromFollower >= Settings.ClearPathDistance.Value)
+				if (distanceFromFollower >= Settings.StartPathDistance.Value)
 				{
 					//Leader moved VERY far in one frame. Check for transition to use to follow them.
 					var distanceMoved = Vector3.Distance(_lastTargetPosition, _followTarget.Pos);

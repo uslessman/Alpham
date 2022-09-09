@@ -14,6 +14,7 @@ namespace Alpha
 		[Menu("Min Path Distance")] public RangeNode<int> PathfindingNodeDistance { get; set; } = new RangeNode<int>(110, 10, 1000);
 		[Menu("Move CMD Frequency")]public RangeNode<int> BotInputFrequency { get; set; } = new RangeNode<int>(90, 10, 250);
 		[Menu("Stop Path Distance")] public RangeNode<int> ClearPathDistance { get; set; } = new RangeNode<int>(410, 100, 5000);
+		[Menu("Start Move Distance")] public RangeNode<int> StartPathDistance { get; set; } = new RangeNode<int>(410, 100, 5000);
 		[Menu("Random Click Offset")] public RangeNode<int> RandomClickOffset { get; set; } = new RangeNode<int>(50, 1, 100);
 		[Menu("Follow Target Name")] public TextNode LeaderName { get; set; } = new TextNode("");
 		[Menu("Movement Key")] public HotkeyNode MovementKey { get; set; } = Keys.T;
