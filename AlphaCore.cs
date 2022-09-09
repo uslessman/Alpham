@@ -555,9 +555,9 @@ namespace Alpha
 				var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
 				Graphics.DrawText($"Task Count: {_tasks.Count} Type: {DebugTask.Type} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
 				Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
-
-				Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value} Clicks: {DebugClick}", new Vector2(500, 120));
 			}
+			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value} Clicks: {DebugClick}", new Vector2(500, 120));
+			
 			/*var counter = 0;
 			foreach (var transition in _areaTransitions)
 			{
