@@ -15,7 +15,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing;
 
-namespace Alpham
+namespace Alpha
 {
 	/// <summary>
 	/// All work is shamelessly leached and cobbled together. 

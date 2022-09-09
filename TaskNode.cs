@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
 
-namespace Alpham
+namespace Alpha
 {
     public class TaskNode
     {
