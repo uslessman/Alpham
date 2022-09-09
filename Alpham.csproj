@@ -7,7 +7,7 @@
     <ProjectGuid>{EE174786-912F-47CA-81AF-5A4955201A4B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Alpha</RootNamespace>
+    <RootNamespace>Alpham</RootNamespace>
     <AssemblyName>Alpham</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

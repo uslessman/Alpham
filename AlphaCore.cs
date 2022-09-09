@@ -24,7 +24,7 @@ namespace Alpham
 	///		Pathfinding: juhgiyo
 	///	I'm just linking things together and doing silly experiments. 
 	/// </summary>
-    public static int debugClick { get; set; } = 0;
+    public static int DebugClick = 0;
 	internal class AlphaCore : BaseSettingsPlugin<AlphaSettings>
 	{
 		private Random random = new Random();
@@ -311,10 +311,10 @@ namespace Alpham
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(currentTask.WorldPosition));
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyDown(Settings.MovementKey);
-						debugClick +=1;
+						DebugClick +=1;
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyUp(Settings.MovementKey);
-						debugClick +=1;
+						DdebugClick +=1;
 
 						//Within bounding range. Task is complete
 						//Note: Was getting stuck on close objects... testing hacky fix.
@@ -365,10 +365,10 @@ namespace Alpham
 								Mouse.SetCursorPosHuman2(screenPos);
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyDown(Settings.MovementKey);
-								debugClick +=1;
+								DebugClick +=1;
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyUp(Settings.MovementKey);
-								debugClick +=1;
+								DebugClick +=1;
 							}
 							currentTask.AttemptCount++;
 							if (currentTask.AttemptCount > 3)
@@ -549,12 +549,11 @@ namespace Alpham
 					var end = WorldToValidScreenPosition(_tasks[i].WorldPosition);
 					Graphics.DrawLine(start, end, 2, SharpDX.Color.Pink);
 				}
-			    if (Settings.IsDebagEnabled.Value) 
 			        Graphics.DrawText($"Task Count: {_tasks.Count} Type: {currentTask.Type} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
 			        Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
 			var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition) : 0;
 			var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
-			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value}", new Vector2(500, 120));
+			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value} Clicks: {DebugClick}", new Vector2(500, 120));
 			
 			/*var counter = 0;
 			foreach (var transition in _areaTransitions)
