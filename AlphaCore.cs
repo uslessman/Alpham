@@ -315,7 +315,7 @@ namespace Alpham
 						DebugClick +=1;
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyUp(Settings.MovementKey);
-						DdebugClick +=1;
+						DebugClick +=1;
 
 						//Within bounding range. Task is complete
 						//Note: Was getting stuck on close objects... testing hacky fix.
