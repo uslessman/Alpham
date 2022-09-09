@@ -15,7 +15,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing;
 
-namespace Alpha
+namespace Alpham
 {
 	/// <summary>
 	/// All work is shamelessly leached and cobbled together. 
@@ -24,6 +24,7 @@ namespace Alpha
 	///		Pathfinding: juhgiyo
 	///	I'm just linking things together and doing silly experiments. 
 	/// </summary>
+    public static int debugClick { get; set; } = 0;
 	internal class AlphaCore : BaseSettingsPlugin<AlphaSettings>
 	{
 		private Random random = new Random();
@@ -310,8 +311,10 @@ namespace Alpha
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(currentTask.WorldPosition));
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyDown(Settings.MovementKey);
+						debugClick +=1;
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyUp(Settings.MovementKey);
+						debugClick +=1;
 
 						//Within bounding range. Task is complete
 						//Note: Was getting stuck on close objects... testing hacky fix.
@@ -362,8 +365,10 @@ namespace Alpha
 								Mouse.SetCursorPosHuman2(screenPos);
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyDown(Settings.MovementKey);
+								debugClick +=1;
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyUp(Settings.MovementKey);
+								debugClick +=1;
 							}
 							currentTask.AttemptCount++;
 							if (currentTask.AttemptCount > 3)

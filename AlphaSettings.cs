@@ -4,7 +4,7 @@ using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 using System.IO;
 
-namespace Alpha
+namespace Alpham
 {
 	class AlphaSettings : ISettings
 	{
