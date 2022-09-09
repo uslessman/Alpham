@@ -544,11 +544,12 @@ namespace Alpha
 					var end = WorldToValidScreenPosition(_tasks[i].WorldPosition);
 					Graphics.DrawLine(start, end, 2, SharpDX.Color.Pink);
 				}
+			    Graphics.DrawText($"Task Count: {_tasks.Count} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
+			    Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
 			var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition) : 0;
 			var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
 			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value}", new Vector2(500, 120));
-			Graphics.DrawText($"Task Count: {_tasks.Count} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
-			Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
+			
 			/*var counter = 0;
 			foreach (var transition in _areaTransitions)
 			{
