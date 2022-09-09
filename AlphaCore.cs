@@ -27,9 +27,9 @@ namespace Alpha
 	internal class AlphaCore : BaseSettingsPlugin<AlphaSettings>
 	{
 		private Random random = new Random();
-		private Camera Camera => GameController.Game.IngameState.Camera;		
+		private Camera Camera => GameController.Game.IngameState.Camera;
 		private Dictionary<uint, Entity> _areaTransitions = new Dictionary<uint, Entity>();
-		
+
 		private Vector3 _lastTargetPosition;
 		private Vector3 _lastPlayerPosition;
 		private Entity _followTarget;
@@ -44,7 +44,7 @@ namespace Alpha
 		private byte[,] _tiles;
 		public AlphaCore()
 		{
-			Name = "Alpha";
+			Name = "Alpham";
 		}
 
 		public override bool Initialise()
@@ -81,7 +81,7 @@ namespace Alpha
 			 I.Type == ExileCore.Shared.Enums.EntityType.Portal ||
 			 I.Type == ExileCore.Shared.Enums.EntityType.TownPortal).ToList())
 			{
-				if(!_areaTransitions.ContainsKey(transition.Id))
+				if (!_areaTransitions.ContainsKey(transition.Id))
 					_areaTransitions.Add(transition.Id, transition);
 			}
 
@@ -101,7 +101,7 @@ namespace Alpha
 				{
 					var b = terrainBytes[dataIndex + (x >> 1)];
 					_tiles[x, y] = (byte)((b & 0xf) > 0 ? 1 : 255);
-					_tiles[x+1, y] = (byte)((b >> 4) > 0 ? 1 : 255);
+					_tiles[x + 1, y] = (byte)((b >> 4) > 0 ? 1 : 255);
 				}
 				dataIndex += terrain.BytesPerRow;
 			}
@@ -119,9 +119,9 @@ namespace Alpha
 					var b = terrainBytes[dataIndex + (x >> 1)];
 
 					var current = _tiles[x, y];
-					if(current == 255)
+					if (current == 255)
 						_tiles[x, y] = (byte)((b & 0xf) > 3 ? 2 : 255);
-					current = _tiles[x+1, y];
+					current = _tiles[x + 1, y];
 					if (current == 255)
 						_tiles[x + 1, y] = (byte)((b >> 4) > 3 ? 2 : 255);
 				}
@@ -134,7 +134,7 @@ namespace Alpha
 
 		public void GeneratePNG()
 		{
-			using (var img = new Bitmap(_numCols,_numRows))
+			using (var img = new Bitmap(_numCols, _numRows))
 			{
 				for (int x = 0; x < _numCols; x++)
 					for (int y = 0; y < _numRows; y++)
@@ -175,13 +175,13 @@ namespace Alpha
 				Mouse.SetCursorPos(new Vector2(
 					clickPos.X + random.Next(-15, 15),
 					clickPos.Y + random.Next(-10, 10)));
-				Thread.Sleep(30 + random.Next(Settings.BotInputFrequency));				
+				Thread.Sleep(30 + random.Next(Settings.BotInputFrequency));
 			}
 		}
 
 		public override Job Tick()
 		{
-
+			Thread.Sleep(50);
 			//Dont run logic if we're dead!
 			if (!GameController.Player.IsAlive)
 				return null;
@@ -189,7 +189,7 @@ namespace Alpha
 			if (Settings.ToggleFollower.PressedOnce())
 			{
 				Settings.IsFollowEnabled.SetValueNoEvent(!Settings.IsFollowEnabled.Value);
-				_tasks = new List<TaskNode>();				
+				_tasks = new List<TaskNode>();
 			}
 
 			if (!Settings.IsFollowEnabled.Value)
@@ -241,42 +241,42 @@ namespace Alpha
 					}
 
 					//Check if we should add quest loot logic. We're close to leader already
-					var questLoot = GetLootableQuestItem();
-					if (questLoot != null &&
-						Vector3.Distance(GameController.Player.Pos, questLoot.Pos) < Settings.ClearPathDistance.Value &&
-						_tasks.FirstOrDefault(I => I.Type == TaskNodeType.Loot) == null)
-						_tasks.Add(new TaskNode(questLoot.Pos, Settings.ClearPathDistance, TaskNodeType.Loot));
+					/*				var questLoot = GetLootableQuestItem();
+									if (questLoot != null &&
+										Vector3.Distance(GameController.Player.Pos, questLoot.Pos) < Settings.ClearPathDistance.Value &&
+										_tasks.FirstOrDefault(I => I.Type == TaskNodeType.Loot) == null)
+										_tasks.Add(new TaskNode(questLoot.Pos, Settings.ClearPathDistance, TaskNodeType.Loot));
 
-					else if (!_hasUsedWP)
-					{
-						//Check if there's a waypoint nearby
-						var waypoint = GameController.EntityListWrapper.Entities.SingleOrDefault(I => I.Type == ExileCore.Shared.Enums.EntityType.Waypoint &&
-							Vector3.Distance(GameController.Player.Pos, I.Pos) < Settings.ClearPathDistance);
+									else if (!_hasUsedWP)
+									{
+										//Check if there's a waypoint nearby
+										var waypoint = GameController.EntityListWrapper.Entities.SingleOrDefault(I => I.Type == ExileCore.Shared.Enums.EntityType.Waypoint &&
+											Vector3.Distance(GameController.Player.Pos, I.Pos) < Settings.ClearPathDistance);
 
-						if (waypoint != null)
-						{
-							_hasUsedWP = true;
-							_tasks.Add(new TaskNode(waypoint.Pos, Settings.ClearPathDistance, TaskNodeType.ClaimWaypoint));
-						}
+										if (waypoint != null)
+										{
+											_hasUsedWP = true;
+											_tasks.Add(new TaskNode(waypoint.Pos, Settings.ClearPathDistance, TaskNodeType.ClaimWaypoint));
+										}
 
-					}
-
+									}
+				*/
 				}
 				_lastTargetPosition = _followTarget.Pos;
 			}
 			//Leader is null but we have tracked them this map.
 			//Try using transition to follow them to their map
-			else if (_tasks.Count == 0 &&
-				_lastTargetPosition != Vector3.Zero)
-			{
+			/*	else if (_tasks.Count == 0 &&
+					_lastTargetPosition != Vector3.Zero)
+				{
 
-				var transOptions = _areaTransitions.Values.
-					Where(I => Vector3.Distance(_lastTargetPosition, I.Pos) < Settings.ClearPathDistance).
-					OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
-				if (transOptions.Length > 0)
-					_tasks.Add(new TaskNode(transOptions[random.Next(transOptions.Length)].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
-			}
-
+					var transOptions = _areaTransitions.Values.
+						Where(I => Vector3.Distance(_lastTargetPosition, I.Pos) < Settings.ClearPathDistance).
+						OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
+					if (transOptions.Length > 0)
+						_tasks.Add(new TaskNode(transOptions[random.Next(transOptions.Length)].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
+				}
+			*/
 
 			//We have our tasks, now we need to perform in game logic with them.
 			if (DateTime.Now > _nextBotAction && _tasks.Count > 0)
@@ -286,7 +286,7 @@ namespace Alpha
 				var playerDistanceMoved = Vector3.Distance(GameController.Player.Pos, _lastPlayerPosition);
 
 				//We are using a same map transition and have moved significnatly since last tick. Mark the transition task as done.
-				if (currentTask.Type == TaskNodeType.Transition && 
+				if (currentTask.Type == TaskNodeType.Transition &&
 					playerDistanceMoved >= Settings.ClearPathDistance.Value)
 				{
 					_tasks.RemoveAt(0);
@@ -348,7 +348,7 @@ namespace Alpha
 					case TaskNodeType.Transition:
 						{
 							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
-							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
+							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
 								//Click the transition
@@ -393,12 +393,12 @@ namespace Alpha
 		}
 
 		private bool CheckDashTerrain(Vector2 targetPosition)
-		{		
+		{
 
 			//TODO: Completely re-write this garbage. 
 			//It's not taking into account a lot of stuff, horribly inefficient and just not the right way to do this.
 			//Calculate the straight path from us to the target (this would be waypoints normally)
-			var distance = Vector2.Distance(GameController.Player.GridPos,targetPosition);
+			var distance = Vector2.Distance(GameController.Player.GridPos, targetPosition);
 			var dir = targetPosition - GameController.Player.GridPos;
 			dir.Normalize();
 
@@ -415,7 +415,7 @@ namespace Alpha
 
 				if (points.Contains(point))
 					continue;
-				if (Vector2.Distance(v2Point,targetPosition) < 2)
+				if (Vector2.Distance(v2Point, targetPosition) < 2)
 					break;
 
 				points.Add(point);
@@ -437,8 +437,8 @@ namespace Alpha
 				else if (!shouldDash)
 				{
 					distanceBeforeWall++;
-					if (distanceBeforeWall > 10)					
-						break;					
+					if (distanceBeforeWall > 10)
+						break;
 				}
 			}
 
@@ -544,7 +544,7 @@ namespace Alpha
 					var end = WorldToValidScreenPosition(_tasks[i].WorldPosition);
 					Graphics.DrawLine(start, end, 2, SharpDX.Color.Pink);
 				}
-			var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition): 0;
+			var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition) : 0;
 			var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
 			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value}", new Vector2(500, 120));
 			Graphics.DrawText($"Task Count: {_tasks.Count} Next WP Distance: {dist} Target Distance: {targetDist}", new Vector2(500, 140));
