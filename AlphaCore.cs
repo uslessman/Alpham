@@ -315,7 +315,7 @@ namespace Alpham
 						DebugClick +=1;
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyUp(Settings.MovementKey);
-						DebugClick +=1;
+						DdebugClick +=1;
 
 						//Within bounding range. Task is complete
 						//Note: Was getting stuck on close objects... testing hacky fix.
@@ -544,18 +544,20 @@ namespace Alpham
 		public override void Render()
 		{
 			if (_tasks != null && _tasks.Count > 1)
+			{
 				for (var i = 1; i < _tasks.Count; i++)
 				{
 					var start = WorldToValidScreenPosition(_tasks[i - 1].WorldPosition);
 					var end = WorldToValidScreenPosition(_tasks[i].WorldPosition);
 					Graphics.DrawLine(start, end, 2, SharpDX.Color.Pink);
 				}
-			        Graphics.DrawText($"Task Count: {_tasks.Count} Type: {DebugTask} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
-			        Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
-			var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition) : 0;
-			var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
-			Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value} Clicks: {DebugClick}", new Vector2(500, 120));
-			
+				var dist = _tasks.Count > 0 ? Vector3.Distance(GameController.Player.Pos, _tasks.First().WorldPosition) : 0;
+				var targetDist = _lastTargetPosition == null ? "NA" : Vector3.Distance(GameController.Player.Pos, _lastTargetPosition).ToString();
+				Graphics.DrawText($"Task Count: {_tasks.Count} Type: {DebugTask} Next WP Distance: {dist} Target Distance: {targetDist} target pos: {_tasks.First().WorldPosition}", new Vector2(500, 140));
+				Graphics.DrawText($"Screen pos: {WorldToValidScreenPosition(_tasks.First().WorldPosition)}", new Vector2(500, 160));
+
+				Graphics.DrawText($"Follow Enabled: {Settings.IsFollowEnabled.Value} Clicks: {DebugClick}", new Vector2(500, 120));
+			}
 			/*var counter = 0;
 			foreach (var transition in _areaTransitions)
 			{
