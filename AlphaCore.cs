@@ -47,7 +47,7 @@ namespace Alpham
 			Name = "Alpham";
 		}
 		public static int DebugClick = 0;
-		public static string DebugTask = "";
+		public static TaskNode DebugTask;
 		public override bool Initialise()
 		{
 			Input.RegisterKey(Settings.MovementKey.Value);
