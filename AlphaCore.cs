@@ -573,7 +573,7 @@ namespace Alpha
 			var screenPos = Camera.WorldToScreen(worldPos);
 			var result = screenPos + windowRect.Location;
 
-			var edgeBounds = 50;
+			var edgeBounds = 100;
 			if (!windowRect.Intersects(new SharpDX.RectangleF(result.X, result.Y, edgeBounds, edgeBounds)))
 			{
 				//Adjust for offscreen entity. Need to clamp the screen position using the game window info. 
